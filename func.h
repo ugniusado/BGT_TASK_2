@@ -5,6 +5,7 @@
 #include <fstream>
 #include <math.h>
 #include <chrono>
+#include <ctime>
 using namespace std;
 
 vector<string> read();
