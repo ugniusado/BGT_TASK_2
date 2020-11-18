@@ -22,7 +22,7 @@ struct BlockChain
 	};
 	transaction Y;
 };
-vector<string> read()
+/*vector<string> read()
 {
 	string pav;
 	vector<string> line;
@@ -72,8 +72,8 @@ vector<string> readM()
 		fin.close();
 	}
 	return line;
-}
-void print(vector<string> hex)
+}*/
+/*void print(vector<string> hex)
 {
 	ofstream fout("Hash.txt");
 	for (int i = 0; i < hex.size(); i++)
@@ -96,8 +96,8 @@ void printMH(vector<string> hex)
 	{
 		fout << hex.at(i) << endl;
 	}
-}
-vector<string> GetString()
+}*/
+/*vector<string> GetString()
 {
 	vector<string> line;
 	line = read();
@@ -117,8 +117,8 @@ vector<string> GetStringM()
 	line = readM();
 	return line;
 
-}
-vector<string> Hash(vector<string> eilutes)
+}*/
+/*vector<string> Hash(vector<string> eilutes)
 {
 	vector<int> skaiciai;
 	vector<string> hex;
@@ -136,7 +136,7 @@ vector<string> Hash(vector<string> eilutes)
 		l.clear();
 	}
 	return hex;
-}
+}*/
 int main()
 {
 	user A[1000];
@@ -144,21 +144,13 @@ int main()
 	{
 		A[i].name = "Name" + to_string(i);
 		A[i].balance = rand() % 1000000 + 100;
-	}
-	ofstream fout("Name.txt");
-	for (int i = 0; i < 1000; i++)
-	{
-		fout << A[i].name << endl;
-	}
-	vector<string> eilute = GetString();
-	vector<string> hex = Hash(eilute);
-	print(hex);
-	ifstream fin("Hash.txt");
-	for (auto i = 0; i < 1000; i++)
-	{
-		fin >> A[i].public_key;
+		A[i].public_key = Hash(A[i].name);
 	}
 	
+	/*vector<string> eilute = GetString();
+	vector<string> hex = Hash(eilute);
+	print(hex);
+	ifstream fin("Hash.txt");*/
 	for(int i = 0; i < 10; i ++)
 	{
 		cout << A[i].balance << endl;
@@ -181,14 +173,14 @@ int main()
 		fout1 << X[i].Y.receiver << X[i].Y.sum << X[i].Y.sender << endl;
 	}
 
-	eilute = GetStringT();
+	/*eilute = GetStringT();
 	hex = Hash(eilute);
-	printTransaction(hex);
-	ifstream fin1("TransactionId.txt");
+	printTransaction(hex);ifstream fin1("TransactionId.txt");*/
+	
 	for (int i = 0; i < 1000; i++)
 	{
 		std::string temp;
-		fin1 >> temp;
+	//	fin1 >> temp;
 		X[i].Y.transactionID = temp;	
 	}
 	BlockChain RandomTransactions[100];
@@ -210,16 +202,20 @@ int main()
 	{
 		fout2 << RandomTransactions[i].Y.transactionID<< endl;
 	}
-	eilute = GetStringM();
+	/*eilute = GetStringM();
 	hex = Hash(eilute);
-	printMH(hex);
-	ifstream fin2("MerkelHash.txt");
+	printMH(hex);ifstream fin2("MerkelHash.txt");*/
+	
 		std::string MerkelTemp;
-		fin2 >> MerkelTemp;
+		//fin2 >> MerkelTemp;
 	for (int i = 0; i < 100; i++)
 	{
 		RandomTransactions[i].MerkelRoot = MerkelTemp;
+		RandomTransactions[i].Nonce = rand() % 1000000;
+		RandomTransactions[i].Diff_Target = 0;
 	}
+
+
 
 
 
