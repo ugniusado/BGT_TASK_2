@@ -36,7 +36,8 @@ Centralizuota bloku grandinė
 	std::string public_key;
 	double balance;
 };
-### struct BlockChain
+### BlockChain
+struct BlockChain
 {
 	std::string prevHash;
 	int timestamp;
@@ -54,7 +55,8 @@ Centralizuota bloku grandinė
 	};
 	transaction Y;
 };
-### struct BS
+### Block System
+struct BS
 {
 	std::string Hash;
 	std::string Transactions[100];
