@@ -63,11 +63,17 @@ Centralizuota bloku grandinė
 ## Kaip veikia programa?
 
 •Sugeneruojama 1000 vartotojų(user'ių) 
+
 •Sugeneruojama 1000 transakcijų(transactions)
+
 •Suskaičiuojamas random 100 parinktų blokų transakcijų Merkle Tree, paprastuoju būdu.
+
 •Išmininamas naujas hashas, kuris atititinka reikalavimus
+
 •Naujame bloke įvykdomos transakcijos
+
 •Naujame bloke eliminuojamos įvykdytos transakcijos
+
 •Vėliau proceso metu prie blockchain sistemos includ'inamas naujai iškastas block'as
 
 
