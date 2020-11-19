@@ -27,6 +27,10 @@ Centralizuota bloku grandinė
 
 Šioje programoje pilnai sutvarkyta v1.0 versija, funkcionuoja su transakcijomis.
 
+**[v0.21](https://github.com/ugniusado/BGT_TASK_2/tree/v0.21)**
+
+Pridėtas balanso ir hasho tikrinimas
+
 ## Naudotos struktūros(blokai)
 
 ### struct user{
