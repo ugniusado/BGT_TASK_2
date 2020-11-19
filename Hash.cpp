@@ -13,6 +13,7 @@ struct BlockChain
 	std::string MerkelRoot;
 	int Nonce;
 	int Diff_Target;
+	std::string Transactions[100];
 	struct transaction
 	{
 		std::string transactionID;
@@ -22,202 +23,124 @@ struct BlockChain
 	};
 	transaction Y;
 };
-/*vector<string> read()
+struct BS
 {
-	string pav;
-	vector<string> line;
-	ifstream fin("Name.txt");
-	if (fin)
+	std::string Hash;
+	std::string Transactions[100];
+};
+string MerkleT(BlockChain RandomTransactions[])
+{
+	ofstream fout("IDS.txt");
+	for (int i = 0; i < 100; i++)
 	{
-		while (!fin.eof())
-		{
-			getline(fin, pav);
-
-			line.push_back(pav);
-		}
-		fin.close();
+		fout << RandomTransactions[i].Y.transactionID << endl;
 	}
-	return line;
+	ifstream fin("IDS.txt");
+	std::string Merkel;
+	std::string MerkelTemp;
+	for (int i = 0; i < 10; i++)//100
+	{
+		fin >> MerkelTemp;
+		Merkel += MerkelTemp;
+	}
+	MerkelTemp = Merkel;
+	Merkel = Hash(MerkelTemp);
+	return Merkel;
 }
-vector<string> readT()
+void RT(BlockChain RandomTransactions[], BlockChain X[])
 {
-	string pav;
-	vector<string> line;
-	ifstream fin("TransactionHash.txt");
-	if (fin)
-	{
-		while (!fin.eof())
-		{
-			getline(fin, pav);
-
-			line.push_back(pav);
-		}
-		fin.close();
-	}
-	return line;
-}
-vector<string> readM()
-{
-	string pav;
-	vector<string> line;
-	ifstream fin("RNTHash.txt");
-	if (fin)
-	{
-		while (!fin.eof())
-		{
-			getline(fin, pav);
-
-			line.push_back(pav);
-		}
-		fin.close();
-	}
-	return line;
-}*/
-/*void print(vector<string> hex)
-{
-	ofstream fout("Hash.txt");
-	for (int i = 0; i < hex.size(); i++)
-	{
-		fout << hex.at(i) << endl;
-	}
-}
-void printTransaction(vector<string> hex)
-{
-	ofstream fout("TransactionId.txt");
-	for (int i = 0; i < hex.size(); i++)
-	{
-		fout << hex.at(i) << endl;
-	}
-}
-void printMH(vector<string> hex)
-{
-	ofstream fout("MerkelHash.txt");
-	for (int i = 0; i < hex.size(); i++)
-	{
-		fout << hex.at(i) << endl;
-	}
-}*/
-/*vector<string> GetString()
-{
-	vector<string> line;
-	line = read();
-	return line;
-
-}
-vector<string> GetStringT()
-{
-	vector<string> line;
-	line = readT();
-	return line;
-
-}
-vector<string> GetStringM()
-{
-	vector<string> line;
-	line = readM();
-	return line;
-
-}*/
-/*vector<string> Hash(vector<string> eilutes)
-{
-	vector<int> skaiciai;
-	vector<string> hex;
-	int a;
-	for (int i = 0; i < eilutes.size(); i++)
-	{
-		code l;
-		for (int o = 0; o < eilutes.at(i).size(); o++)
-		{
-			a = int(eilutes.at(i).at(o));
-			l.x(a + o);
-		}
-		l.hashinimas();
-		hex.push_back(l.GetHex());
-		l.clear();
-	}
-	return hex;
-}*/
-int main()
-{
-	user A[1000];
-	for (auto i = 0; i < 1000; i++)
-	{
-		A[i].name = "Name" + to_string(i);
-		A[i].balance = rand() % 1000000 + 100;
-		A[i].public_key = Hash(A[i].name);
-	}
-	
-	/*vector<string> eilute = GetString();
-	vector<string> hex = Hash(eilute);
-	print(hex);
-	ifstream fin("Hash.txt");*/
-	for(int i = 0; i < 10; i ++)
-	{
-		cout << A[i].balance << endl;
-		cout << A[i].name << endl;
-		cout << A[i].public_key << endl;
-	}
-
-	
-	BlockChain X[1000];
-	for (int i = 0; i < 1000; i++)
-	{
-		X[i].Y.receiver = A[rand() % 1000].name;
-		X[i].Y.sender = A[rand() % 1000].name;
-		X[i].Y.sum = rand() %1000000;
-
-	}
-	ofstream fout1("TransactionHash.txt");
-	for (int i = 0; i < 1000; i++)
-	{
-		fout1 << X[i].Y.receiver << X[i].Y.sum << X[i].Y.sender << endl;
-	}
-
-	/*eilute = GetStringT();
-	hex = Hash(eilute);
-	printTransaction(hex);ifstream fin1("TransactionId.txt");*/
-	
-	for (int i = 0; i < 1000; i++)
-	{
-		std::string temp;
-	//	fin1 >> temp;
-		X[i].Y.transactionID = temp;	
-	}
-	BlockChain RandomTransactions[100];
 	for (int i = 0; i < 100; i++)
 	{
 		RandomTransactions[i] = X[rand() % 1000];
 	}
 	for (int i = 1; i < 100; i++)
 	{
-		RandomTransactions[i].prevHash = RandomTransactions[i - 1].prevHash;		
+		RandomTransactions[i].prevHash = RandomTransactions[i - 1].prevHash;
 	}
 	for (int i = 0; i < 100; i++)
 	{
 		RandomTransactions[i].timestamp = std::time(nullptr);
-		RandomTransactions[i].Version = "v" + to_string(i+1) + ".0";
-	}
-	ofstream fout2("RNTHash.txt");
-	for (int i = 0; i < 100; i++)
-	{
-		fout2 << RandomTransactions[i].Y.transactionID<< endl;
-	}
-	/*eilute = GetStringM();
-	hex = Hash(eilute);
-	printMH(hex);ifstream fin2("MerkelHash.txt");*/
-	
-		std::string MerkelTemp;
-		//fin2 >> MerkelTemp;
-	for (int i = 0; i < 100; i++)
-	{
-		RandomTransactions[i].MerkelRoot = MerkelTemp;
+		RandomTransactions[i].Version = "v" + to_string(i + 1) + ".0";
 		RandomTransactions[i].Nonce = rand() % 1000000;
 		RandomTransactions[i].Diff_Target = 0;
 	}
+}
+void usr(user A[])
+{
+	for (auto i = 0; i < 1000; i++)
+	{
+		A[i].name = "Name" + to_string(i);
+		A[i].balance = rand() % 1000000 + 100;
+		A[i].public_key = Hash(A[i].name);
+	}
+}
+void BC(BlockChain X[], user A[])
+{
+	for (int i = 0; i < 1000; i++)
+	{
+		X[i].Y.receiver =Hash(A[rand() % 1000].name);
+		X[i].Y.sender = Hash( A[rand() % 1000].name);
+		X[i].Y.sum = rand() % 1000000;
+		X[i].Y.transactionID = Hash(X[i].Y.receiver + X[i].Y.sender + to_string(X[i].Y.sum));
+	}
+}
+int main()
+{
+	int  size = 1000, j = 0;
+	int characters = 0, blocks= 0;
+	user A[1000];
+	usr(A);
+	BlockChain X[1000];
+	BC(X, A);
+	BlockChain RandomTransactions[100];
+	RT(RandomTransactions, X);
+	string Merkel = MerkleT(RandomTransactions);
+	for (int i = 0; i < 100; i++)
+	RandomTransactions[i].MerkelRoot = Merkel;
+	BS bls[100];
+	ofstream fout("o.txt");
+	while (size > 100)
+		
+	{
+		for (int i = 0; i < 100; i++)
+		{
+			int send = 0, get = 0;
+			for (int j = 0; j < size; j++)
+				if (X[j].Y.transactionID == X[blocks].Transactions[i])
+					break;
+			for (int k = 0; k < 1000; k++)
+			{
+				if (A[k].public_key == (X[j].Y.sender))
+					send = k;
+				else if (A[k].public_key == X[j].Y.receiver)
+					get = k;
+				if (send != 0 && get != 0)
+					break;
+			}
+			A[send].balance -= X[j].Y.sum;
+			A[get].balance += X[j].Y.sum;
+			for (int m = j; m < (size - 1); m++)
+			{
+				X[m].Y.transactionID = X[m + 1].Y.transactionID;
+				X[m].Y.sender = X[m + 1].Y.sender;
+				X[m].Y.receiver = X[m + 1].Y.receiver;
+				X[m].Y.sum = X[m + 1].Y.sum;
+			}
+			size--;
+		}
+		for (int i = 0; i < 100; i++)
+			bls[i].Transactions[characters] = X[i].Transactions[blocks];
+
+		fout << bls[characters].Hash << endl;
+		characters++;
+	}
+	return 0;
+}
+	
 
 
 
 
 
 	
-}
+

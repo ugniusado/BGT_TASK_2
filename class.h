@@ -185,3 +185,4 @@ string Hash(string line)
 
 	return hash;
 }
+
