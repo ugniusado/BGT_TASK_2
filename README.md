@@ -36,9 +36,7 @@ Centralizuota bloku grandinė
 	std::string public_key;
 	double balance;
 };
-### BlockChain
-struct BlockChain
-{
+### struct BlockChain {
 	std::string prevHash;
 	int timestamp;
 	std::string Version;
@@ -55,13 +53,10 @@ struct BlockChain
 	};
 	transaction Y;
 };
-### Block System
-struct BS
-{
+### struct BS {
 	std::string Hash;
 	std::string Transactions[100];
 };
-
 ## Kaip veikia programa?
 
 •Sugeneruojama 1000 vartotojų(user'ių) 
