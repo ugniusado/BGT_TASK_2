@@ -9,8 +9,6 @@ Centralizuota bloku grandinė
 
 • *terminale, įvesti programos vieta diske*
 
-• *Sukurti .txt failą projekto aplanke ir įvesti tekstą ar duomenis, kurie bus hash'uojami*
-
 • *Kompiliuoti jūsų programą*
 
 • *Visos kitos instrukcijos bus rodomos konsolėje*
