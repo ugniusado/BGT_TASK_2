@@ -106,13 +106,13 @@ char GetChar(int cs, char cr)
 	default: cr = 'F';
 	}
 	return cr;
-	
+
 }
 string Hash(string line)
 {
 	string pack, hash;
 	int lngt, shw = 0, shw2 = 0, i, y, z = 0, cs;
-	char cr ='D' ;
+	char cr = 'D';
 	lngt = line.length();
 	shw = line[0];
 	y = 1;
@@ -170,9 +170,11 @@ string Hash(string line)
 
 			if (z >= 32)
 				z = 0;
+			auto it1 = hash.begin() + z;
+			auto it2 = hash.begin() + z + 3;
+			hash.replace(it1, it2, pack);
 
-			hash.replace(hash.begin() + z, hash.begin() + z + pack.length(), pack);
-			z += pack.length();
+			z += 3;
 
 			if (x % 2 == 0)
 				shw4 += 3;
@@ -185,4 +187,3 @@ string Hash(string line)
 
 	return hash;
 }
-
