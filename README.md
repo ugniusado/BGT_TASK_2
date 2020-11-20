@@ -31,6 +31,10 @@ Centralizuota bloku grandinė
 
 Pridėtas balanso ir hasho tikrinimas
 
+**[v0.22](https://github.com/ugniusado/BGT_TASK_2/tree/v0.22)**
+
+Sutvarkyti string iteratoriu error'ai ir spausdinama iskasto bloko hash
+
 ## Naudotos struktūros(blokai)
 
 ### struct user{
