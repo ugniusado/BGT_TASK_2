@@ -37,7 +37,7 @@ Sutvarkyti string iteratoriu error'ai ir spausdinama iskasto bloko hash
 
 Pridėta merkle medžio realizaciją create_merkle() 
 
-**[v0.3](https://github.com/ugniusado/BGT_TASK_2/tree/v0.3)**
+**[v0.31](https://github.com/ugniusado/BGT_TASK_2/tree/v0.31)**
 
 ## Naudotos struktūros(blokai)
 
