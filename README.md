@@ -35,6 +35,10 @@ Pridėtas balanso ir hasho tikrinimas
 
 Sutvarkyti string iteratoriu error'ai ir spausdinama iskasto bloko hash
 
+Pridėta merkle medžio realizaciją create_merkle() 
+
+**[v0.3](https://github.com/ugniusado/BGT_TASK_2/tree/v0.3)**
+
 ## Naudotos struktūros(blokai)
 
 ### struct user{
