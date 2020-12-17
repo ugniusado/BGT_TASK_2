@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <string>
 #include <vector>
@@ -9,7 +8,9 @@
 #include <streambuf>
 #include <stdlib.h>
 #include <cstdlib>
+#include <bitcoin/bitcoin.hpp>
 using namespace std;
+
 
 vector<string> read();
 void print(vector<string> hex);

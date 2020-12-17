@@ -1,6 +1,10 @@
+
 #include <C:\Users\ugniu\source\repos\Hash\func.h>
 #include <C:\Users\ugniu\source\repos\Hash\class.h>
-struct user{
+
+
+
+struct user {
 	std::string name;
 	std::string public_key;
 	double balance;
@@ -27,11 +31,11 @@ struct BS
 	std::string Hash;
 	std::string Transactions[100];
 };
-void  MerkleT(BlockChain RandomTransactions[], int blocks)
+/*void  MerkleT(BlockChain RandomTransactions[], int blocks)
 {
 	int temp = 50;
 	for (int i = 0; i < 100; i += 2)
-	RandomTransactions[blocks].MerkelRoot[i / 2] = Hash(RandomTransactions[blocks].Transactions[i] + RandomTransactions[blocks].Transactions[i + 1]);
+		RandomTransactions[blocks].MerkelRoot[i / 2] = Hash(RandomTransactions[blocks].Transactions[i] + RandomTransactions[blocks].Transactions[i + 1]);
 	while (temp != 1)
 	{
 		for (int i = 0; i < temp; i++)
@@ -47,24 +51,37 @@ void  MerkleT(BlockChain RandomTransactions[], int blocks)
 		}
 	}
 }
-/*void RT(BlockChain RandomTransactions[], BlockChain X[])
+*/
+bc::hash_digest create_merkle(bc::hash_list& merkle)
 {
-	for (int i = 0; i < 100; i++)
+	if (merkle.empty())
+		return bc::null_hash;
+	else if (merkle.size() == 1)
+		return merkle[0];
+	while (merkle.size() > 1)
 	{
-		RandomTransactions[i] = X[rand() % 1000];
+		if (merkle.size() % 2 != 0)
+			merkle.push_back(merkle.back());
+		assert(merkle.size() % 2 == 0);
+		bc::hash_list new_merkle;
+		for (auto it = merkle.begin(); it != merkle.end(); it += 2)
+		{
+			bc::data_chunk concat_data(bc::hash_size * 2);
+			auto concat = bc::serializer<
+				decltype(concat_data.begin())>(concat_data.begin());
+			concat.write_hash(*it);
+			concat.write_hash(*(it + 1));
+			bc::hash_digest new_root = bc::bitcoin_hash(concat_data);
+			new_merkle.push_back(new_root);
+		}
+		merkle = new_merkle;
+		cout << "Current merkle hash list:" << endl;
+		for (const auto& hash: merkle)
+		cout << " " << bc::encode_base16(hash) << endl;
+		cout << endl;
 	}
-	for (int i = 1; i < 100; i++)
-	{
-		RandomTransactions[i].prevHash = RandomTransactions[i - 1].prevHash;
-	}
-	for (int i = 0; i < 100; i++)
-	{
-		RandomTransactions[i].timestamp = std::time(nullptr);
-		RandomTransactions[i].Version = "v" + to_string(i + 1) + ".0";
-		RandomTransactions[i].Nonce = rand() % 1000000;
-		RandomTransactions[i].Diff_Target = 0;
-	}
-}*/
+	return merkle[0];
+}
 void usr(user A[])
 {
 	for (auto i = 0; i < 1000; i++)
@@ -74,16 +91,7 @@ void usr(user A[])
 		A[i].public_key = Hash(A[i].name);
 	}
 }
-/*void BC(BlockChain X[], user A[])
-{
-	for (int i = 0; i < 1000; i++)
-	{
-		X[i].Y.receiver =Hash(A[rand() % 1000].name);
-		X[i].Y.sender = Hash( A[rand() % 1000].name);
-		X[i].Y.sum = rand() % 1000000;
-		X[i].Y.transactionID = Hash(X[i].Y.receiver + X[i].Y.sender + to_string(X[i].Y.sum));
-	}
-}*/
+
 transaction TRS(user A[])
 {
 	transaction trss;
@@ -133,7 +141,7 @@ int main()
 	transaction trss;
 	trss = TRS(A);
 	BlockChain RandomTransactions[5];
-	while(size > 100)
+	while (size > 100)
 	{
 		for (int b = 0; b < 5; b++)
 		{
@@ -162,7 +170,7 @@ int main()
 
 				}
 			}
-			MerkleT(RandomTransactions, blocks);
+			//MerkleT(RandomTransactions, blocks);
 		}
 		int r = 10000;
 		temp = "0";
@@ -174,45 +182,51 @@ int main()
 			}r *= 2; cout << temp << "   ";
 		}
 		bls[characters].Hash = temp;
-	for (int i = 0; i < 100; i++)
-	{
-		int send = 0, get = 0;
-		for (int j = 0; j < size; j++)
-			if (trss.transactionID[j] == RandomTransactions[blocks].Transactions[i])
-				break;
-		for (int k = 0; k < 1000; k++)
+		for (int i = 0; i < 100; i++)
 		{
-			if (A[k].public_key == (trss.sender[j]))
-				send = k;
-			else if (A[k].public_key == trss.receiver[j])
-				get = k;
-			if (send != 0 && get != 0)
-				break;
+			transactions[i] = hashas(block[blcount].trans[i]);
 		}
-		A[send].balance -= trss.sum[j];
-		A[get].balance += trss.sum[j];
-		for (int m = j; m < (size - 1); m++)
+		bc::hash_list tx_hashes;
+		for (int i = 0; i < 100; i++)
 		{
-			trss.transactionID[m] = trss.transactionID[m+1];
-			trss.sender[m] = trss.sender[m+1];
-			trss.receiver[m] = trss.receiver[m+1];
-			trss.sum[m] = trss.sum[m+1];
+			char chars[65];
+			strcpy(chars, transactions[i].c_str());
+			tx_hashes.push_back(bc::hash_literal(chars));
 		}
-		size--;
-	}
-	for (int i = 0; i < 100; i++)
-		bls[i].Transactions[characters] = RandomTransactions[blocks].Transactions[i];
+		const bc::hash_digest merkle_root = create_merkle(tx_hashes);
+		string MerkleT = bc::encode_base16(merkle_root);
+		bls[characters].Has = Miner(block, blcount, blchain, chcount, MerkleT);
+		for (int i = 0; i < 100; i++)
+		{
+			int send = 0, get = 0;
+			for (int j = 0; j < size; j++)
+				if (trss.transactionID[j] == RandomTransactions[blocks].Transactions[i])
+					break;
+			for (int k = 0; k < 1000; k++)
+			{
+				if (A[k].public_key == (trss.sender[j]))
+					send = k;
+				else if (A[k].public_key == trss.receiver[j])
+					get = k;
+				if (send != 0 && get != 0)
+					break;
+			}
+			A[send].balance -= trss.sum[j];
+			A[get].balance += trss.sum[j];
+			for (int m = j; m < (size - 1); m++)
+			{
+				trss.transactionID[m] = trss.transactionID[m + 1];
+				trss.sender[m] = trss.sender[m + 1];
+				trss.receiver[m] = trss.receiver[m + 1];
+				trss.sum[m] = trss.sum[m + 1];
+			}
+			size--;
+		}
+		for (int i = 0; i < 100; i++)
+			bls[i].Transactions[characters] = RandomTransactions[blocks].Transactions[i];
 
-	fout << bls[characters].Hash << "      ";
-	characters++;
-}
+		fout << bls[characters].Hash << "      ";
+		characters++;
+	}
 	return 0;
 }
-	
-
-
-
-
-
-	
-
