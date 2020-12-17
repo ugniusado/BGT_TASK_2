@@ -67,7 +67,11 @@ Sutvarkyta merklehash() funkcijos error'ai ir hashai spausdinami tiek į failą,
 	std::string Hash;
 	std::string Transactions[100];
 };
-### struct BS create_merkle{
+
+## Naudota merkle funkcija
+
+
+### create_merkle{
 	if (merkle.empty())
 		return bc::null_hash;
 	else if (merkle.size() == 1)
